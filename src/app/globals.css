@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
+/* Design tokens — mirrored from Figma variable collection "Mafia · Dark" */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #050505;
+  --surface: #111111;
+  --surface-elevated: #1b1b1b;
+  --text-primary: #f5f2f3;
+  --text-muted: #aeaaa9;
+  --text-placeholder: #a19ca8;
+  --text-support: #ffffffc7;
+  --border: #343434;
+  --border-subtle: #ffffff29;
+  --border-inner: #ffffff1f;
+  --glass-tint: #ffffff11;
+  --input-tint: #ffffff0b;
+  --brand: #b22222;
+  --brand-pressed: #8d1b1b;
+  --brand-hot: #e23b3b;
+  --brand-deep: #3d0909;
+  --gold: #f2c46d;
+  --gold-deep: #b8791f;
+  --success: #87d5ac;
+  --warning: #e9c580;
+  --error: #ffb4ab;
+  --focus: #f3b7b7;
+  --faction-mafia: #dca4af;
+  --faction-town: #a3bfdc;
+  /* player identity rings */
+  --ring-gold: #f2c46d;
+  --ring-teal: #2ee6b6;
+  --ring-sky: #4cc9ff;
+  --ring-pink: #ff5fa2;
+  --ring-violet: #a78bfa;
+  --ring-orange: #ff9f4a;
+  /* radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-control: 18px;
+  --radius-card: 22px;
+  --radius-nav: 36px;
+  --radius-field: 14px;
+  --radius-join: 20px;
+  --radius-pill: 999px;
+  /* space */
+  --margin: 24px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-elevated: var(--surface-elevated);
+  --color-ink: var(--text-primary);
+  --color-muted: var(--text-muted);
+  --color-line: var(--border-subtle);
+  --color-brand: var(--brand);
+  --color-hot: var(--brand-hot);
+  --color-gold: var(--gold);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --font-sans: var(--font-alexandria);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html, body { background: var(--bg); color: var(--text-primary); font-family: var(--font-alexandria), system-ui, sans-serif; }
+body { -webkit-tap-highlight-color: transparent; overscroll-behavior: none; user-select: none; -webkit-user-select: none; }
+* { box-sizing: border-box; }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* Text styles — Mafia/* */
+.t-display { font-size: 30px; line-height: 48px; font-weight: 800; }
+.t-heading { font-size: 24px; line-height: 38px; font-weight: 700; }
+.t-title { font-size: 18px; line-height: 28px; font-weight: 600; }
+.t-body { font-size: 14px; line-height: 24px; font-weight: 400; }
+.t-label { font-size: 15px; line-height: 24px; font-weight: 500; }
+.t-label-s { font-size: 13px; line-height: 24px; font-weight: 500; }
+.t-caption { font-size: 11px; line-height: 20px; font-weight: 400; }
+
+/* Mobile app frame: 390 max, centered on desktop */
+.app-frame { position: relative; width: 100%; max-width: 430px; min-height: 100dvh; margin: 0 auto; background: var(--bg); overflow: hidden; }
+.gold-gradient { background: linear-gradient(180deg, #f6d489, #d9993a); color: #1b1208; }
+.brand-gradient { background: linear-gradient(180deg, #e23b3b, #b22222 55%, #8d1b1b); color: #fff4f6; }

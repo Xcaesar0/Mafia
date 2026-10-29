@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   GameConfig, GameState, createGame, mulberry32, validateConfig, buildRoleList, currentShooter, checkWinner,
-  resolveNight, resolveVote, tally, winXp, levelFromXp, totalXpForLevel, xpToNext, tierOf, sizeFactor, dailyFactor,
+  resolveNight, resolveVote, resolveVoteCounts, tally, winXp, levelFromXp, totalXpForLevel, xpToNext, tierOf, sizeFactor, dailyFactor,
 } from "./index";
 
 const cfg = (over: Partial<GameConfig> = {}, sp: Partial<GameConfig["special"]> = {}): GameConfig => ({
@@ -29,9 +29,9 @@ function stateWith(roles: string[], extra: Partial<GameState> = {}): GameState {
 }
 
 describe("setup & validation", () => {
-  it("requires 5..24 players", () => {
-    expect(validateConfig(4, cfg())).toBeTruthy();
-    expect(validateConfig(5, cfg({ mafiaCount: 1 }))).toBeNull();
+  it("requires 4..24 players", () => {
+    expect(validateConfig(3, cfg())).toBeTruthy();
+    expect(validateConfig(4, cfg({ mafiaCount: 1 }, { doctor: false }))).toBeNull();
     expect(validateConfig(25, cfg())).toBeTruthy();
   });
   it("mafia count 1..6 and below half of players", () => {
@@ -61,7 +61,7 @@ describe("setup & validation", () => {
     expect(a.round).toBe(1);
   });
   it("throws on invalid config", () => {
-    expect(() => createGame(names(4), cfg(), mulberry32(1))).toThrow();
+    expect(() => createGame(names(3), cfg(), mulberry32(1))).toThrow();
   });
 });
 
@@ -238,6 +238,23 @@ describe("voting", () => {
     const { state } = resolveVote(s, { p2: "p1", p3: "p1" });
     expect(state.winner).toBe("town");
     expect(state.phase).toBe("ended");
+  });
+});
+
+describe("hand-count voting (shared device)", () => {
+  const base = () => stateWith(["mafia", "mafia", "mayor", "civilian", "civilian", "civilian", "civilian", "doctor"]);
+  it("eliminates the unique leader", () => {
+    const r = resolveVoteCounts(base(), { p4: 2, p5: 3, p6: 1 });
+    expect(r.state.players[4].alive).toBe(false);
+    expect(r.state.round).toBe(2);
+  });
+  it("tie or no votes eliminates nobody", () => {
+    expect(resolveVoteCounts(base(), { p4: 2, p5: 2 }).events).toContainEqual({ type: "tie" });
+    expect(resolveVoteCounts(base(), {}).state.players.every((p) => p.alive)).toBe(true);
+  });
+  it("ignores dead targets", () => {
+    const s = base(); s.players[3].alive = false;
+    expect(resolveVoteCounts(s, { p4: 9, p5: 1 }).state.players[4].alive).toBe(false);
   });
 });
 

@@ -2,10 +2,10 @@ import { GameConfig, GameState, MAX_MAFIA, MAX_PLAYERS, MIN_PLAYERS, Player, Rol
 import { Rng, shuffle } from "./rng";
 
 export function validateConfig(playerCount: number, config: GameConfig): string | null {
-  if (playerCount < MIN_PLAYERS) return "الحد الأدنى ٥ لاعبين";
-  if (playerCount > MAX_PLAYERS) return "الحد الأقصى ٢٤ لاعباً";
+  if (playerCount < MIN_PLAYERS) return "الحد الأدنى 4 لاعبين";
+  if (playerCount > MAX_PLAYERS) return "الحد الأقصى 24 لاعباً";
   const { mafiaCount, special } = config;
-  if (mafiaCount < 1 || mafiaCount > MAX_MAFIA) return "عدد المافيا من ١ إلى ٦";
+  if (mafiaCount < 1 || mafiaCount > MAX_MAFIA) return "عدد المافيا من 1 إلى 6";
   if (mafiaCount * 2 >= playerCount) return "عدد المافيا يجب أن يكون أقل من نصف اللاعبين";
   if (special.silencer && mafiaCount < 2) return "مافيا التسكيت تحتاج مافيا اثنين على الأقل";
   const townSpecials = [special.doctor, special.sniper, special.mayor, special.goodboy].filter(Boolean).length;

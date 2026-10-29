@@ -23,8 +23,24 @@ export function tally(s: GameState, votes: Record<string, string>): VoteResult {
   return { counts, leaders, tied: leaders.length > 1 };
 }
 
-export function resolveVote(s: GameState, votes: Record<string, string>): { state: GameState; events: GameEvent[]; result: VoteResult } {
-  const result = tally(s, votes);
+/** Hand-count mode (shared device): counts per living target, entered by the group. The mayor's x3 is applied by the group. */
+export function tallyCounts(s: GameState, counts: Record<string, number>): VoteResult {
+  const clean: Record<string, number> = {};
+  for (const [id, n] of Object.entries(counts)) if (byId(s, id)?.alive && n > 0) clean[id] = Math.floor(n);
+  const max = Math.max(0, ...Object.values(clean));
+  const leaders = Object.keys(clean).filter((id) => clean[id] === max && max > 0);
+  return { counts: clean, leaders, tied: leaders.length > 1 };
+}
+
+export function resolveVote(s: GameState, votes: Record<string, string>) {
+  return applyVote(s, tally(s, votes));
+}
+
+export function resolveVoteCounts(s: GameState, counts: Record<string, number>) {
+  return applyVote(s, tallyCounts(s, counts));
+}
+
+function applyVote(s: GameState, result: VoteResult): { state: GameState; events: GameEvent[]; result: VoteResult } {
   const next: GameState = { ...s, players: s.players.map((p) => ({ ...p })) };
   const events: GameEvent[] = [];
   if (result.leaders.length === 1) {
