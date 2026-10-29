@@ -21,7 +21,7 @@ export default function Home() {
         <Image src="/art/sunburst.svg" alt="" width={720} height={720} className="absolute -left-[261px] -top-[171px] max-w-none opacity-100" />
         <Image src="/art/hero.webp" alt="" width={203} height={259} className="absolute -left-[14px] top-[70px] h-[259px] w-[203px] max-w-none object-cover" priority />
         <div className="absolute left-[23px] top-[17px] flex flex-row-reverse gap-[10px]">
-          <Avatar name="ق" size={44} />
+          <Link href="/account" aria-label="حسابي"><Avatar name="ق" size={44} /></Link>
           <Link href="/rules" aria-label="كيف تلعب" className="flex size-11 items-center justify-center rounded-full border border-white/16 bg-white text-black"><Help size={22} /></Link>
         </div>
         <div className="absolute right-[25px] top-[15px]"><Logo width={46} /></div>

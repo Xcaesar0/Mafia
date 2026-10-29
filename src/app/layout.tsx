@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Alexandria } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "@/lib/session";
+import { AuthProvider } from "@/lib/auth";
 
 const alexandria = Alexandria({
   variable: "--font-alexandria",
@@ -27,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ar" dir="rtl" className={`${alexandria.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <SessionProvider>{children}</SessionProvider>
+        <AuthProvider><SessionProvider>{children}</SessionProvider></AuthProvider>
       </body>
     </html>
   );
