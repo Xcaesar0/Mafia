@@ -14,7 +14,8 @@ export default function Callback() {
         const { error } = await supabase().auth.exchangeCodeForSession(code);
         if (error) return setErr(error.message);
       }
-      router.replace("/account");
+      let n = "/account"; try { n = localStorage.getItem("mafia-next") || n; localStorage.removeItem("mafia-next"); } catch {}
+      router.replace(n);
     })();
   }, [router]);
   return (

@@ -48,7 +48,7 @@ export default function Create() {
           <p className="t-body text-[var(--text-muted)]">اختر طريقة اللعب، وتقدر تغيّرها لاحقًا</p>
         </div>
         <div className="flex flex-col gap-10 pt-12">
-          <ModeCard tone="red" badge="قريباً" title="عدة أجهزة" sub="كل لاعب بجواله وغرفة بكود" range="4 – 24 لاعب" art="/art/mode-multi.webp" disabled />
+          <ModeCard tone="red" badge="أونلاين" title="عدة أجهزة" sub="كل لاعب بجواله وغرفة بكود" range="4 – 24 لاعب" art="/art/mode-multi.webp" onClick={() => router.push("/room")} />
           <ModeCard
             tone="gold" badge="للطاولة" title="جهاز واحد" sub="مرّر الجوال بين اللاعبين" range="4 – 12 لاعب" art="/art/mode-shared.webp"
             onClick={() => { d({ t: "reset" }); router.push("/play"); }}

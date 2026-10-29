@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Screen, BottomNav, Logo, Avatar } from "@/components/ui";
+import { JoinBar } from "@/components/join-bar";
 import { ArrowLeft, Hash, Help, Plus, QrCode, ChevronLeft } from "@/components/icons";
 
 const ROLES = [
@@ -38,14 +39,7 @@ export default function Home() {
       </section>
 
       {/* Join room bar */}
-      <div className="relative z-10 -mt-6 mx-6 flex h-[60px] items-center gap-3 rounded-[22px] border border-white/16 bg-[var(--surface-elevated)] pl-2 pr-4 shadow-[0_4px_8px_rgba(0,0,0,0.28)]">
-        <Hash size={22} className="shrink-0 text-[var(--text-muted)]" />
-        <input inputMode="numeric" pattern="[0-9]*" maxLength={6} placeholder="أدخل رمز الغرفة" aria-label="رمز الغرفة" className="t-body flex-1 bg-transparent text-right text-ink outline-none placeholder:text-[var(--text-placeholder)]" />
-        <QrCode size={22} className="shrink-0 text-[var(--text-muted)]" />
-        <button className="relative flex h-11 w-[92px] shrink-0 items-center justify-center gap-1 rounded-[18px] bg-gradient-to-b from-[#f2c46d] to-[#b8791f] text-[15px] font-medium text-[var(--bg)] shadow-[0_6px_8px_rgba(242,196,109,0.35)]">
-          <ArrowLeft size={18} /> انضم
-        </button>
-      </div>
+      <JoinBar />
 
       {/* Cards */}
       <div className="mx-6 mt-5 flex gap-6">

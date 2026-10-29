@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { Screen, TopBar, PrimaryButton, SecondaryButton, Logo } from "@/components/ui";
 import { useAuth } from "@/lib/auth";
 
+const nextUrl = () => { const n = new URLSearchParams(location.search).get("next"); return n && n.startsWith("/") ? n : "/account"; };
+
 export default function Login() {
   const router = useRouter();
   const { signInGuest, signInGoogle } = useAuth();
@@ -15,9 +17,9 @@ export default function Login() {
     setBusy(true); setErr(null);
     const e = await signInGuest(name.trim().slice(0, 14) || "لاعب");
     setBusy(false);
-    if (e) setErr("تعذّر الدخول، حاول مرة أخرى"); else router.replace("/account");
+    if (e) setErr("تعذّر الدخول، حاول مرة أخرى"); else router.replace(nextUrl());
   };
-  const google = async () => { setBusy(true); const e = await signInGoogle(); if (e) { setErr("تعذّر الدخول عبر Google"); setBusy(false); } };
+  const google = async () => { setBusy(true); try { localStorage.setItem("mafia-next", nextUrl()); } catch {} const e = await signInGoogle(); if (e) { setErr("تعذّر الدخول عبر Google"); setBusy(false); } };
 
   return (
     <Screen>
