@@ -60,7 +60,7 @@ export default function Home() {
         <h3 className="t-title">شخصيات اللعبة</h3>
         <Link href="/rules" className="t-caption flex items-center gap-1 text-[var(--focus)]">عرض الكل <ChevronLeft size={16} /></Link>
       </div>
-      <div className="mt-8 flex gap-3 overflow-x-auto px-6 pb-3 [scrollbar-width:none]">
+      <div className="mt-2 flex gap-3 overflow-x-auto px-6 pb-3 pt-8 [scrollbar-width:none]">
         {ROLES.map((r) => (
           <div key={r.id} className="relative flex h-[146px] w-[132px] shrink-0 flex-col items-end justify-end rounded-[22px] border border-[var(--border)] bg-gradient-to-b from-[var(--surface-elevated)] to-[var(--bg)] p-3">
             <span aria-hidden className="absolute left-[17px] top-[-5px] h-[72px] w-[96px] rounded-full blur-2xl" style={{ background: `${r.glow}55` }} />
